@@ -9,12 +9,16 @@ int main(int argc, char **argv){
 
 	init();
 
-	int	fileNum;
-
 /*	set open file number	*/
 
+	int	fileNum, treeNum;
+
 	fileNum	=	0;
+	treeNum	=	0;
+	
 	open_file(fileNum);
+	read_tree(treeNum);
+	construct_tree(treeNum);
 
 	return 0;
 }

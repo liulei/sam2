@@ -13,3 +13,8 @@ double lookback(double z);
 
 /* io.c */
 void open_file(int fileNum);
+
+/* tree.c */
+void read_tree(int treeNum);
+void construct_tree(int treeNum);
+

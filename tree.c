@@ -36,6 +36,8 @@ void construct_tree(int treeNum){
 		total	+=	halo_per_snap[i];
 	}
 
+	printf("Total halos in section %d: %d\n", treeNum, total);
+
 	int	snapNum, count;
 	for(i = 0; i < All.treeTable[treeNum]; ++i){
 		snapNum	=	halo[i].snapNum;

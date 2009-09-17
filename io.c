@@ -14,9 +14,9 @@ void open_file(int fileNum){
 		exit(1);
 	}
 
-	fread(&All.Ntrees, sizeof(int), 1, fp);
-	fread(&All.totalNhalos,sizeof(int), 1, fp);
-	printf("Total trees:%d\nTotal halos:%d\n",All.Ntrees,All.totalNhalos);
+	fread(&All.Ntrees, sizeof(int), 1, All.fp);
+	fread(&All.totalNhalos,sizeof(int), 1, All.fp);
+	printf("Total sections:%d\nTotal halos:%d\n",All.Ntrees,All.totalNhalos);
 	All.treeTable   =   (int *)malloc(sizeof(int) * All.Ntrees);
 	fread(All.treeTable, sizeof(int), All.Ntrees, All.fp);
 }
