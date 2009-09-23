@@ -23,3 +23,27 @@ double lookback(double z){
 
 	return tot;
 }
+
+double	calc_hubble(double z){
+
+	double	a, h;
+
+	a	=	1.0 / (1.0 + z);
+
+	h	=	1.0 - Omega_m + Omega_m / (a * a * a);
+
+	h	=	All.Hubble * sqrt(h);
+
+	return(h);
+}
+
+double	r_vir(float Mass, float z){
+
+	double	h, r;
+
+	h	=	calc_hubble(z);
+
+	r	=	pow(All.G * Mass / (100 * h * h), 1.0 / 3.0);
+
+	return(r);
+}

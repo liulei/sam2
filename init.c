@@ -37,7 +37,9 @@ void set_snap_time(void){
 		printf("%d:\t%f\t%g\n", 
 				i, 
 				snap_redshift[i], 
-				snap_lookback[i] * All.UnitTime_in_Gigayears);
+				snap_lookback[i] 
+//				* All.UnitTime_in_Gigayears
+				);
 	}
 }
 

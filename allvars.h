@@ -42,6 +42,7 @@ typedef struct global_data{
 	int		sn;
 	int		it;
 	double	dt;
+	double	t_age;
 	double	redshift;
 	double	snapTime;
 	double	snap_z;

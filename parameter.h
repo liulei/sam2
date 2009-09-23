@@ -1,16 +1,16 @@
 #ifndef	PARAMETER_H
 #define	PARAMETER_H
 
-#define		h			0.73
+//#define		h			0.73
 #define		Omega_m		0.25
 #define		Omega_b		0.045
 #define		f_b			0.17
 
-#define		startNum	9
+#define		STARTSNAP	9
 #define		sqrt_2		1.414
 #define		SQRT_H		0.8544
-#define		Nstep		20
-#define		AGE			9.91497
+#define		NSTEP		20
+#define		AGE			0.0101287
 #define		MC			0.3
 //#define		MAXVEL		390.0
 #define		MAXVEL		500
