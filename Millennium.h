@@ -38,6 +38,7 @@ typedef struct tagGalaxy{
 	float	m_vir;
 	float	r_vir;
 	float	v_vir;
+	float	t_dyn;
 	float	v_c;
 	float	sfr;
 	float	pos[3];
@@ -46,6 +47,7 @@ typedef struct tagGalaxy{
 /*	for central galaxy:	*/
 	float	coolingRate;
 	float	r_cool;
+	float	flag_cool;
 
 /*	for all galaxy:	*/
 	int	currentMain;

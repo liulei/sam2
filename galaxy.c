@@ -5,6 +5,14 @@
 #include	"allvars.h"
 #include	"proto.h"
 
+static int	it;
+
+static double	dt;
+static double	dz;
+
+static double	t_age;
+static double	redshift;
+
 void run(int treeNum){
 	
 	int	i, hid, snapNum;
@@ -179,4 +187,35 @@ void create_galaxy(int hid){
 	g[hid].z_cold			=	0.0;
 
 	g[hid].flag_v	=	0;
+}
+
+void evolve_galaxy(int snapNum){
+
+	double	snapTime, snapZ;
+	int		i, hid, sid;
+
+	snapTime	=	snap_lookback[snapNum - 1] - snap_lookback[snapNum];
+	snapZ		=	snap_redshift[snapNum - 1] - snap_redshift[snapNum];
+	dt	=	snapTime / NSTEP;
+	dz	=	snapZ / NSTEP;
+
+	for(it = 1; it <= NSTEP; ++it){
+		t_age		=	it * dt + AGE - snap_lookback[snapNum - 1];
+		redshift	=	snap_redshift[snapNum - 1] - (it - 1) * dz;
+		
+		for(i = 0; i < halo_per_snap[snapNum - 1]; ++i){
+			hid	=	snap[snapNum - 1][i].hid;
+			evolve_single_galaxy(hid);
+		}
+	}
+
+	for(i = 0; i < halo_per_snap[snapNum - 1]; ++i){
+		hid	=	snap[snapNum - 1][i].hid;
+		g[hid].snapNum++;
+		sid	=	g[hid].nextSat;
+		while(sid != -1){
+			g[sid].snapNum++;
+			sid	=	g[sid].nextSat;
+		}
+	}
 }

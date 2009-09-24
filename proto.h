@@ -22,5 +22,7 @@ void construct_tree(int treeNum);
 
 /* galaxy.c */
 void run(int treeNum);
+void create_galaxy(int hid);
+void evolve_galaxy(int snapNum);
 void update_center_hot(int hid);
 

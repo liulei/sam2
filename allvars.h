@@ -39,14 +39,16 @@ typedef struct global_data{
 	FILE	*fp;
 	FILE	*fout;
 
-	int		sn;
+	double	t_age;
+
+/*
 	int		it;
 	double	dt;
-	double	t_age;
 	double	redshift;
 	double	snapTime;
 	double	snap_z;
-	
+*/
+
 	FILE	*fdebug;
 	FILE	*fsat;
 	FILE	*dnum;
