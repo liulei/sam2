@@ -1,6 +1,7 @@
 EXEC	=	sam2
 
-OBJS	=	main.o allvars.o init.o aux.o io.o tree.o galaxy.o
+OBJS	=	main.o allvars.o init.o aux.o io.o tree.o galaxy.o \
+			cooling.o
 
 INCL	=	Millennium.h allvars.h proto.h
 

@@ -43,7 +43,31 @@ double	r_vir(float Mass, float z){
 
 	h	=	calc_hubble(z);
 
-	r	=	pow(All.G * Mass / (100 * h * h), 1.0 / 3.0);
+	r	=	pow(All.G * Mass / (100.0 * h * h), 1.0 / 3.0);
 
 	return(r);
 }
+
+double	v_vir(float Mass, float z){
+	
+	double	h, v;
+	
+	h	=	calc_hubble(z);
+
+	v	=	pow(10.0 * All.G * Mass * h, 1.0 / 3.0);
+
+	return(v);
+}
+
+double	t_dyn(float Mass, float z){
+	
+	double	h, t;
+
+	h	=	calc_hubble(z);
+
+	t	=	0.01 / h;
+
+	return(t);
+}
+
+

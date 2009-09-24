@@ -40,11 +40,11 @@ typedef struct global_data{
 	FILE	*fout;
 
 	double	t_age;
+	double	redshift;
 
 /*
 	int		it;
 	double	dt;
-	double	redshift;
 	double	snapTime;
 	double	snap_z;
 */

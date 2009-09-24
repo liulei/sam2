@@ -34,12 +34,14 @@ void set_snap_time(void){
 
 	for(i = 0; i <= 63; ++i){
 		snap_lookback[i]	=	lookback(snap_redshift[i]);
+/*		
 		printf("%d:\t%f\t%g\n", 
 				i, 
 				snap_redshift[i], 
 				snap_lookback[i] 
 //				* All.UnitTime_in_Gigayears
 				);
+*/
 	}
 }
 
@@ -59,4 +61,5 @@ void set_units(){
 	printf("Hubble (internal units) = %g\n", All.Hubble);
 	printf("G (internal units) = %g\n", All.G);
 	printf("UnitTime_in_s = %g\n", All.UnitTime_in_s);
+	printf("UnitTime_in_Gigayears = %g\n", All.UnitTime_in_Gigayears);
 }
