@@ -362,4 +362,61 @@ int halo_to_sat(int pid, int center, int currentMain){
 
 int update_halo_galaxy(int hid){
 
+	int	pid, psid;
+
+	pid	=	g[hid].firstProg;
+	
+	g[hid].nextSat	=	g[pid].nextSat;
+
+	g[hid].flag_cool	=	g[pid].flag_cool;
+
+	g[hid].m_eject_step		=	0.0;
+	g[hid].m_eject_z_step	=	g[pid].m_eject_z_step;
+	g[hid].m_hot		=	0.0;
+	g[hid].m_hot_z		=	g[pid].m_hot_z;
+	g[hid].m_cold		=	g[pid].m_cold;
+	g[hid].m_cold_z		=	g[pid].m_cold_z;
+	g[hid].m_stellar	=	g[pid].m_stellar;
+	g[hid].m_stellar_z	=	g[pid].m_stellar_z;
+	g[hid].m_bulge		=	g[pid].m_bulge;
+	g[hid].m_bulge_z	=	g[pid].m_bulge_z;
+	g[hid].z_hot		=	0.0;
+	g[hid].z_cold		=	g[pid].z_cold;
+
+	int	center, currentMain;
+	center	=	hid;
+	currentMain	=	g[hid].firstInFOF;
+
+	psid	=	update_all_sat(hid, center, currentMain, 0, 0);
+
+	return(psid);
 }
+
+int update_all_sat(int pid, int center, int currentMain, int isUpdate, double r_sat){
+
+	int	psid, sid;
+	
+	psid	=	pid;
+	sid		=	g[pid].nextSat;
+	
+	while(sid != -1){
+		update_single_sat(sid, center, currentMain, isUpdate, r_sat);
+		psid	=	sid;
+		sid		=	g[sid].nextSat;
+	}
+
+	return(psid);
+}
+
+void update_single_sat(int pid, int center, int currentMain, int isUpdate, double r_sat){
+	
+	g[pid].currentMain	=	currentMain;
+
+	g[pid].center	=	center;
+
+	if(isUpdate == 1){
+		g[pid].t_merge	=	merge_time(center, pid, r_sat);
+	}
+}
+
+
