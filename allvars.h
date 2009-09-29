@@ -10,6 +10,8 @@
 
 #define	GRAVITY			6.673e-11	/*	in mks units	*/
 #define	SOLAR_MASS		1.98892e30	/*	in kg	*/
+#define	PROTON_MASS		1.6726e-27	/*	in kg	*/
+#define	BOLTZMAN_CONST	1.3807e-16	/*	in erg/k	*/
 #define	C				2.99792458e8	/*	in m/s	*/
 #define	HUBBLE			3.2407789e-18	/*	in h/sec	*/
 
@@ -26,6 +28,9 @@ typedef struct global_data{
 	double	UnitLength_in_m;
 	double	UnitTime_in_Gigayears;
 	double	Hubble;
+	double	UnitCoolingRate;
+	double	m_p;
+	double	k;
 
 	int		Ntrees;
 	int		totalNhalos;

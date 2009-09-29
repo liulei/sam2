@@ -21,6 +21,7 @@
 #define		LOWINF		1.0e-8
 #define		Z_SUN		-1.79588
 //#define		Z_SUN		1.79588
+#define		MU_BAR		0.6
 
 #ifdef		SALPETER
 #define		p			0.032

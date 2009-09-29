@@ -37,3 +37,6 @@ void update_single_sat(int pid, int center, int currentMain, int isUpdate, doubl
 /* cooling.c */
 void init_cooling();
 double cooling_rate(int hid);
+double cooling_radius(int hid);
+double lambda(double z_hot, double T);
+double search_row(int idz, double logT);

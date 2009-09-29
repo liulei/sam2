@@ -58,6 +58,11 @@ void set_units(){
 	All.G	=	GRAVITY / pow(All.UnitLength_in_m, 3) * All.UnitMass_in_kg * pow(All.UnitTime_in_s, 2);
 	All.Hubble	=	HUBBLE * All.UnitTime_in_s;
 
+/*	In the original form Lambda is in units of erg cm^3 s^{-1}, we have to convert it to internal units.*/
+	All.UnitCoolingRate	=	1.0e-9 / pow(All.UnitLength_in_m, 3) * All.UnitTime_in_s;
+	All.m_p	=	PROTON_MASS / All.UnitMass_in_kg;
+	All.k	=	BOLTZMAN_CONST;
+
 	printf("Hubble (internal units) = %g\n", All.Hubble);
 	printf("G (internal units) = %g\n", All.G);
 	printf("UnitTime_in_s = %g\n", All.UnitTime_in_s);
