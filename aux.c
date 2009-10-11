@@ -70,4 +70,21 @@ double	t_dyn(float Mass, float z){
 	return(t);
 }
 
+double	sfr(double velocity, double t_dyn, double m_cold){
 
+	double	alpha, m_crit, rate;
+	
+	alpha	=	ALPHA_0 * pow(velocity / 300.0, NSFR);
+	if(alpha >= 1.0){
+		alpha	=	1.0;
+	}
+
+	m_crit	=	0.0;
+
+	rate	=	alpha * (m_cold - m_crit) / t_dyn;
+
+	if(rate < 0.0)
+		rate	=	0.0;
+
+	return(rate);
+}

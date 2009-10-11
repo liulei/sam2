@@ -29,7 +29,7 @@
 #define		ALPHA_0		0.10
 #define		EPSILON		0.1
 //#define		EPSILON		0.4
-#define		n			2.2
+#define		NSFR		2.2
 #define		ETA_SN		6.3
 #endif
 
@@ -38,7 +38,7 @@
 #define		R			0.4
 #define		ALPHA_0		0.10
 #define		EPSILON		0.2
-#define		n			2.2
+#define		NSFR		2.2
 #define		ETA_SN		5.0
 #endif
 

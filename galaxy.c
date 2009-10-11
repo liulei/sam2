@@ -419,4 +419,175 @@ void update_single_sat(int pid, int center, int currentMain, int isUpdate, doubl
 	}
 }
 
+int merge(int sid){
+	
+	double	m_small, m_big;
+	int		cid;
 
+	cid	=	g[sid].center;
+	if(g[cid].snapNum != g[sid].snapNum){
+		printf("Error merge time!\n");
+		return(1);
+	}
+
+	m_small	=	g[sid].m_stellar;
+	m_big	=	g[cid].m_stellar;
+
+	float	ratio;
+
+	if(m_big < LOWINF){
+		printf("galaxy %d has no star!\n", cid);
+		ratio	=	1.0;
+	}else{
+		ratio	=	m_small / m_big;
+	}
+
+	if(ratio < MC){
+
+/*	minor merge:
+ */
+		g[cid].m_cold		+=	g[sid].m_cold;
+		g[cid].m_cold_z		+=	g[sid].m_cold_z;
+		g[cid].m_bulge		+=	g[sid].m_stellar;
+		g[cid].m_bulge_z	+=	g[sid].m_stellar_z;
+
+		g[cid].m_stellar	+=	g[sid].m_stellar;
+		g[cid].m_stellar_z	+=	g[sid].m_stellar_z;
+	
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * don't forget set g[cid].z_cold!
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ */
+
+	}else{
+/*	major merge:
+ */
+		g[cid].m_bulge		=	g[cid].m_stellar + g[cid].m_cold
+						  	  + g[sid].m_stellar + g[sid].m_cold;
+		g[cid].m_bulge_z	=	g[cid].m_stellar_z + g[cid].m_cold_z 
+							  + g[sid].m_stellar_z + g[sid].m_cold_z;
+
+		g[cid].m_stellar	=	g[cid].m_bulge;
+		g[cid].m_stellar_z	=	g[cid].m_bulge_z;
+
+		g[cid].m_cold	=	0.0;
+		g[cid].m_cold_z	=	0.0;
+		g[cid].z_cold	=	0.0;
+	}
+	
+	g[cid].lastMerge	=	sid;
+
+	return(0);
+}
+
+void integrate(int hid){
+	double	dm_stellar, dm_eject, dm_cool, dm_cold, dm_hot;
+	double	dm_stellar_z, dm_eject_z, dm_cool_z, dm_cold_z, dm_hot_z;
+	double	dm_total, dm_total_z;
+	
+	int		mid;
+
+	dm_stellar		=	0.0;
+	dm_stellar_z	=	0.0;
+	dm_eject		=	0.0;
+	dm_eject_z		=	0.0;
+	dm_cool			=	0.0;
+	dm_cool_z		=	0.0;
+	dm_cold			=	0.0;
+	dm_cold_z		=	0.0;
+	dm_hot			=	0.0;
+	dm_hot_z		=	0.0;
+
+	if(g[hid].type != 2){
+		g[hid].sfr	=	sfr(g[hid].v_vir, g[hid].t_dyn, g[hid].m_cold);
+	}
+
+	if(g[hid].m_cold < LOWINF){
+		goto	TYPE;
+	}
+
+	dm_stellar	=	(1.0 - R) * g[hid].sfr * dt;
+	dm_eject	=	m_eject(g[hid].v_vir, dm_stellar);
+	dm_total	=	dm_stellar + dm_eject;
+
+	if(dm_total > g[hid].m_cold){
+		dm_stellar	=	g[hid].m_cold / dm_total * dm_stellar;
+		dm_eject	=	g[hid].m_cold - dm_stellar;
+	}
+
+	dm_stellar_z	=	dm_stellar * g[hid].z_cold;
+	dm_eject_z		=	dm_eject * g[hid].z_cold;
+	dm_total_z		=	dm_stellar_z + dm_eject_z;
+
+	if(dm_total_z > g[hid].m_cold_z){
+		dm_stellar_z	=	g[hid].m_cold_z / dm_total_z * dm_stellar_z;
+		dm_eject_z	=	g[hid].m_cold_z - dm_stellar_z;
+	}
+
+	mid	=	g[hid].currentMain;
+	g[mid].m_eject_step		+=	dm_eject;
+	g[mid].m_eject_z_step	+=	dm_eject_z;
+
+TYPE:
+	if(g[hid].type == 0){
+
+		dm_cool	=	g[hid].coolingRate * dt;
+
+		if(dm_cool > g[hid].m_hot){
+			dm_cool	=	g[hid].m_hot;
+		}
+
+		dm_cold	=	dm_cool - dm_stellar - dm_eject;
+
+		dm_hot	=	-dm_cool + g[hid].m_eject_step;
+		g[hid].m_eject_step	=	0.0;
+
+		dm_cool_z	=	dm_cool * g[hid].z_hot;
+		if(dm_cool_z > g[hid].m_hot_z){
+			dm_cool_z	=	g[hid].m_hot_z;
+		}
+
+		dm_cold_z	=	dm_cool_z + p * dm_stellar / (1.0 - R)
+						- dm_stellar_z - dm_eject_z;
+
+		dm_hot_z	=	-dm_cool_z + g[hid].m_eject_z_step;
+		g[hid].m_eject_z_step	=	0.0;
+	
+	}else{
+
+		dm_cold		=	-dm_stellar - dm_eject;
+		dm_cold_z	=	p * dm_stellar / (1.0 - R)
+						- dm_stellar_z - dm_eject_z;
+	}
+
+	g[hid].m_stellar	+=	dm_stellar;
+	g[hid].m_stellar_z	+=	dm_stellar_z;
+
+	g[hid].m_cold		+=	dm_cold;
+	g[hid].m_cold_z		+=	dm_cold_z;
+	if(g[hid].m_cold_z > g[hid].m_cold){
+		g[hid].m_cold_z	=	g[hid].m_cold;
+	}
+	if(g[hid].m_cold < LOWINF){
+		g[hid].m_cold	=	0.0;
+		g[hid].m_cold_z	=	0.0;
+		g[hid].z_cold	=	0.0;
+	}else{
+		g[hid].z_cold	=	g[hid].m_cold_z / g[hid].m_cold;
+	}
+
+	if(g[hid].type == 0){
+		g[hid].m_hot	+=	dm_hot;
+		g[hid].m_hot_z	+=	dm_hot_z;
+		if(g[hid].m_hot_z > g[hid].m_hot){
+			g[hid].m_hot_z	=	g[hid].m_hot;
+		}
+		if(g[hid].m_hot < LOWINF){
+			g[hid].m_hot	=	0.0;
+			g[hid].m_hot_z	=	0.0;
+			g[hid].z_hot	=	0.0;
+		}else{
+			g[hid].z_hot	=	g[hid].m_hot_z / g[hid].m_hot;
+		}
+	}
+}
