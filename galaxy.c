@@ -345,13 +345,18 @@ int halo_to_sat(int pid, int center, int currentMain){
 	g[pid].center	=	center;
 
 	pcid	=	g[center].firstProg;
-    r_sat   =   (g[pid].pos[0]-g[pcid].pos[0])*(g[pid].pos[0]-g[pcid].pos[0])
-				+(g[pid].pos[1]-g[pcid].pos[1])*(g[pid].pos[1]-g[pcid].pos[1])
-				+(g[pid].pos[2]-g[pcid].pos[2])*(g[pid].pos[2]-g[pcid].pos[2]);	
+
+	if(pcid == -1){
+		r_sat	=	g[center].r_vir;
+	}else{
+    	r_sat   =   (g[pid].pos[0]-g[pcid].pos[0])*(g[pid].pos[0]-g[pcid].pos[0])
+					+ (g[pid].pos[1]-g[pcid].pos[1])*(g[pid].pos[1]-g[pcid].pos[1])
+					+ (g[pid].pos[2]-g[pcid].pos[2])*(g[pid].pos[2]-g[pcid].pos[2]);	
 
 //	???????????????????????????????????????????????????????????
-	r_sat   =   sqrt(r_sat)/(1.+g[pcid].redshift);
+		r_sat   =   sqrt(r_sat)/(1.+g[pcid].redshift);
 //	???????????????????????????????????????????????????????????
+	}
 
 	g[pid].t_merge  =   merge_time(center, pid, r_sat);
 	
@@ -478,6 +483,25 @@ int merge(int sid){
 	g[cid].lastMerge	=	sid;
 
 	return(0);
+}
+
+double merge_time(int center, int sat, double r_sat){
+
+	double	m_big, m_small, time;
+
+	int		pid;
+
+	pid	=	g[center].firstProg;
+	if(pid == -1){
+		r_sat	=	g[center].r_vir;
+	}
+
+	m_big	=	g[center].m_vir;
+	m_small	=	g[sat].m_vir;
+
+	time	=	tao(r_sat, g[center].v_vir, m_big, m_small);
+
+	return(time);
 }
 
 void integrate(int hid){

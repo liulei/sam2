@@ -15,6 +15,8 @@ double r_vir(float Mass, float z);
 double v_vir(float Mass, float z);
 double t_dyn(float Mass, float z);
 double sfr(double velocity, double t_dyn, double m_cold);
+double m_eject(double v_vir, double m_star);
+double tao(double r_sat, double v_c, double m_vir, double m_sat);
 
 /* io.c */
 void open_file(int fileNum);
@@ -35,6 +37,7 @@ int update_halo_galaxy(int hid);
 int update_all_sat(int pid, int center, int currentMain, int isUpdate, double r_sat);
 void update_single_sat(int pid, int center, int currentMain, int isUpdate, double r_sat);
 int merge(int sid);
+double merge_time(int center, int sat, double r_sat);
 void integrate(int hid);
 int jump_galaxy(int pid);
 

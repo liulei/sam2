@@ -88,3 +88,28 @@ double	sfr(double velocity, double t_dyn, double m_cold){
 
 	return(rate);
 }
+
+double m_eject(double v_vir, double m_star){
+	
+	double	mass;
+
+	mass	=	0.67e5 * EPSILON * ETA_SN * m_star / v_vir / v_vir;
+	
+	return(mass);
+}
+
+double tao(double r_sat, double v_c, double m_vir, double m_sat){
+
+	if(m_sat < LOWINF){
+		return(0.0);
+	}
+
+	double	r_c, time;
+
+	r_c	=	r_sat;
+
+	time	=	0.5 * 0.5 * v_c * r_c * r_c 
+				/ (0.43 * All.G * m_sat * log(1.0 + m_vir / m_sat));
+
+	return(time);
+}
