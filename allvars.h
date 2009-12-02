@@ -40,6 +40,7 @@ typedef struct global_data{
 	int		currentSnap;
 
 	char	treeDir[MAXLEN_FILENAME];
+	char	outputDir[MAXLEN_FILENAME];
 
 	FILE	*fp;
 	FILE	*fout;
@@ -57,10 +58,6 @@ typedef struct global_data{
 	FILE	*fdebug;
 	FILE	*fsat;
 	FILE	*dnum;
-
-	int		groupNum;
-	int		galaxyNum;
-	int		subNum;
 }ALL;
 
 extern	ALL		All;

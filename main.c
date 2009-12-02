@@ -14,11 +14,17 @@ int main(int argc, char **argv){
 	int	fileNum, treeNum;
 
 	fileNum	=	0;
-	treeNum	=	0;
+//	treeNum	=	0;
 	
 	open_file(fileNum);
-	read_tree(treeNum);
-	construct_tree(treeNum);
+	begin_output(fileNum);
+	for(treeNum = 0; treeNum < All.Ntrees; ++treeNum){
+		read_tree(treeNum);
+		construct_tree(treeNum);
+		run(treeNum);
+		output_tree(treeNum);
+	}
+	end_output();
 
 	return 0;
 }

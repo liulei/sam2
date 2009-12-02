@@ -20,6 +20,11 @@ double tao(double r_sat, double v_c, double m_vir, double m_sat);
 
 /* io.c */
 void open_file(int fileNum);
+void begin_output(int fileNum);
+void end_output(void);
+void output_tree(int treeNum);
+void output_galaxy(int hid);
+void write_single_galaxy(int hid);
 
 /* tree.c */
 void read_tree(int treeNum);

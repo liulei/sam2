@@ -14,6 +14,8 @@ void init(){
 
 	strcpy(All.treeDir, "/home/liulei/SAM/mergingtree/data");
 
+	strcpy(All.outputDir, "result");
+
 	printf("Init done!\n");
 }
 

@@ -21,6 +21,7 @@ void run(int treeNum){
 
 	printf("section %d: \n", treeNum);
 
+//	printf("create galaxy...\n");
 	All.t_age	=	AGE - snap_lookback[STARTSNAP];
 	for(i = 0; i < halo_per_snap[STARTSNAP]; ++i){
 		hid	=	snap[STARTSNAP][i].hid;
@@ -35,10 +36,12 @@ void run(int treeNum){
 		}
 	}
 
+//	printf("evolve galaxy...\n");
 	for(snapNum = STARTSNAP + 1; snapNum <= ENDSNAP; ++snapNum){
 		
 		evolve_galaxy(snapNum);
 
+//		printf("total halos in snap %d: %d\n", snapNum, halo_per_snap[snapNum]);
 		for(i = 0; i < halo_per_snap[snapNum]; ++i){
 			hid	=	snap[snapNum][i].hid;
 			construct_galaxy(hid, snapNum);
@@ -133,7 +136,12 @@ void create_galaxy(int hid){
 	g[hid].m_vir	=	halo[hid].m200;
 //	g[hid].m_vir	=	halo[hid].m_TopHat;
 
-	if(g[hid].type	!=	0){
+	if(g[hid].type == 0 && g[hid].m_vir < LOWINF){
+//		printf("%d: m200: %f\tlen: %d\n", hid, halo[hid].m200, halo[hid].len);
+		g[hid].m_vir	=	0.086 * halo[hid].len;
+	}
+
+	if(g[hid].type != 0){
 		g[hid].m_vir	=	0.086 * halo[hid].len;
 	}
 
@@ -236,7 +244,7 @@ int construct_galaxy(int hid, int snapNum){
 
 	pid	=	g[hid].firstProg;
 	while(g[pid].snapNum < snapNum){
-//		jump_galaxy(pid);
+		jump_galaxy(pid);
 	}
 
 	g[hid].origin	=	g[pid].origin;
@@ -441,9 +449,10 @@ int merge(int sid){
 	float	ratio;
 
 	if(m_big < LOWINF){
-		printf("galaxy %d has no star!\n", cid);
+//		printf("merge: galaxy %d has no star!\n", cid);
 		ratio	=	1.0;
 	}else{
+//		printf("merge:\n");
 		ratio	=	m_small / m_big;
 	}
 

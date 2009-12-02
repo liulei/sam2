@@ -12,13 +12,12 @@
 #define		NSTEP		20
 #define		AGE			0.0101287
 #define		MC			0.3
-//#define		MAXVEL		390.0
-#define		MAXVEL		500
+#define		MAXVEL		390.0
 
 #define		ENDSNAP		63
 #define		NIL			-6.0
 #define		OUTSNAP		63
-#define		LOWINF		1.0e-8
+#define		LOWINF		1.0e-6
 #define		Z_SUN		-1.79588
 //#define		Z_SUN		1.79588
 #define		MU_BAR		0.6

@@ -7,10 +7,6 @@
 
 void read_tree(int treeNum){
 
-	if(halo != NULL){
-		free(halo);
-		halo	=	NULL;
-	}
 	halo	=	(HALO *)malloc(sizeof(HALO) * All.treeTable[treeNum]);
 	fread(halo, sizeof(HALO), All.treeTable[treeNum], All.fp);
 }

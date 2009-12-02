@@ -61,8 +61,8 @@ double lambda(double z_hot, double T){
 
 	logT	=	log10(T);
 
-//	tt	=	search_row(0, logT);
-//	return(tt);
+	tt	=	search_row(0, logT);
+	return(tt);
 
 	if(logZ <= NIL){
 		idz	=	0;
@@ -150,6 +150,8 @@ double cooling_rate(int hid){
 	
 	double	t_cool, coolingRate;
 
+	g[hid].r_cool	=	cooling_radius(hid);
+
 	t_cool	=	All.t_age;
 
 	if(g[hid].r_vir < g[hid].r_cool){
@@ -157,6 +159,8 @@ double cooling_rate(int hid){
 	}else{
 		coolingRate	=	g[hid].m_hot / g[hid].r_vir * g[hid].r_cool / 2.0 / t_cool;
 	}
+
+//	printf("type: %d\tm_hot: %g\tm_vir: %g\tr_vir: %g\tcooling rate: %g\n", g[hid].type, g[hid].m_hot, g[hid].m_vir, g[hid].r_vir, coolingRate);
 
 	return(coolingRate);
 }
