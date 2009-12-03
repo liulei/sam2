@@ -12,6 +12,8 @@ void init(){
 
 	set_snap_time();
 
+	init_cooling();
+
 	strcpy(All.treeDir, "/home/liulei/SAM/mergingtree/data");
 
 	strcpy(All.outputDir, "result");
@@ -61,7 +63,7 @@ void set_units(){
 	All.Hubble	=	HUBBLE * All.UnitTime_in_s;
 
 /*	In the original form Lambda is in units of erg cm^3 s^{-1}, we have to convert it to internal units.*/
-	All.UnitCoolingRate	=	1.0e-9 / pow(All.UnitLength_in_m, 3) * All.UnitTime_in_s;
+	All.UnitCoolingRate	=	1.0e-6 / pow(All.UnitLength_in_m, 3) * All.UnitTime_in_s;
 	All.m_p	=	PROTON_MASS / All.UnitMass_in_kg;
 	All.k	=	BOLTZMAN_CONST;
 

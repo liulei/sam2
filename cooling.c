@@ -61,8 +61,8 @@ double lambda(double z_hot, double T){
 
 	logT	=	log10(T);
 
-	tt	=	search_row(0, logT);
-	return(tt);
+//	tt	=	search_row(0, logT);
+//	return(tt);
 
 	if(logZ <= NIL){
 		idz	=	0;
@@ -131,7 +131,7 @@ double cooling_radius(int hid){
 	coolingRadius	=	Lambda * g[hid].m_hot * t_cool 
 					  / (6.0 * M_PI * MU_BAR * All.m_p * All.k * T * g[hid].r_vir);
 	
-	coolingRadius	=	sqrt(coolingRadius);
+	coolingRadius	=	0.23 * sqrt(coolingRadius) * (1. + All.redshift);
 
 	return(coolingRadius);
 }
